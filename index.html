@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Help Shape 2027 | The Kart Championship</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0c0f; --bg2:#0f1115; --panel:#14161b; --panel2:#1d2027; --line:#2a2e37;
+    --text:#f4f5f7; --muted:#9aa1ad; --dim:#555a66;
+    --red:#e4202d; --red2:#ff4b57; --green:#1f9d55; --yellow:#e4e227; --blue:#2d6ca1;
+    --head:"Barlow Condensed","Arial Narrow",sans-serif; --body:"Barlow",Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  a{color:var(--text)}
+  .stripe{display:flex;height:6px}
+  .stripe i{flex:1}
+  .stripe i:nth-child(1){background:var(--green)} .stripe i:nth-child(2){background:var(--yellow)}
+  .stripe i:nth-child(3){background:var(--red)} .stripe i:nth-child(4){background:var(--blue)}
+  header.top{position:sticky;top:0;z-index:20;background:rgba(7,8,10,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  header.top .bar{max-width:880px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  header.top img{height:34px;width:auto;display:block}
+  header.top .tag{font-family:var(--head);font-style:italic;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-size:15px}
+  .progress{height:4px;background:var(--panel2)}
+  .progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--yellow),var(--red),var(--blue));transition:width .4s ease}
+  main{max-width:880px;margin:0 auto;padding:28px 20px 80px}
+  .screen{display:none;animation:fade .35s ease}
+  .screen.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  h1,h2,h3{font-family:var(--head);font-style:italic;font-weight:800;text-transform:uppercase;line-height:.95;margin:0}
+  h1{font-size:clamp(46px,9vw,88px);letter-spacing:-.01em}
+  h2{font-size:clamp(34px,6vw,52px);margin-bottom:8px}
+  h3{font-size:24px;margin-bottom:6px}
+  .kicker{display:inline-block;font-family:var(--head);font-style:italic;font-weight:800;text-transform:uppercase;font-size:14px;letter-spacing:.06em;background:var(--red);color:#fff;padding:4px 10px;margin-bottom:16px}
+  .lead{color:#d5d9e0;font-size:19px;max-width:620px;margin:18px 0 0}
+  .muted{color:var(--muted)}
+  .hero{position:relative;padding:40px 0 10px}
+  .hero .meta{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 32px}
+  .chip{border:1px solid var(--line);background:var(--panel);padding:8px 14px;font-weight:600;font-size:14px}
+  .chip b{font-family:var(--head);font-style:italic;font-size:18px;margin-right:6px}
+  .card{background:var(--panel);border:1px solid var(--line);padding:26px;margin:18px 0;position:relative}
+  .card.accent-green{border-left:4px solid var(--green)} .card.accent-yellow{border-left:4px solid var(--yellow)}
+  .card.accent-red{border-left:4px solid var(--red)} .card.accent-blue{border-left:4px solid var(--blue)}
+  .card .num{font-family:var(--head);font-style:italic;font-weight:800;color:var(--dim);font-size:15px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+  label.q{display:block;font-weight:700;font-size:17px;margin:0 0 8px}
+  .hint{font-size:14px;color:var(--muted);margin:-4px 0 10px}
+  .field{margin-bottom:20px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
+  @media (max-width:640px){.grid2{grid-template-columns:1fr}}
+  input[type=text],input[type=email],input[type=tel],select,textarea{
+    width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--text);font:inherit;font-size:16px;padding:13px 14px;border-radius:0;outline:none;transition:border-color .15s}
+  select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:40px}
+  textarea{min-height:110px;resize:vertical}
+  input:focus,select:focus,textarea:focus{border-color:var(--text)}
+  .invalid input,.invalid select,.invalid textarea{border-color:var(--red2)}
+  .err{display:none;color:var(--red2);font-size:14px;font-weight:600;margin-top:6px}
+  .invalid .err{display:block}
+  .choices{display:flex;flex-wrap:wrap;gap:10px}
+  .choice{position:relative}
+  .choice input{position:absolute;opacity:0;pointer-events:none}
+  .choice span{display:block;border:1px solid var(--line);background:var(--bg2);padding:12px 18px;font-weight:600;cursor:pointer;transition:all .15s;user-select:none}
+  .choice span:hover{border-color:var(--muted)}
+  .choice input:checked+span{background:var(--text);color:var(--bg);border-color:var(--text)}
+  .choice input:focus-visible+span{outline:2px solid var(--yellow);outline-offset:2px}
+  .invalid .choice span{border-color:#6b2a30}
+  .reveal{display:none;margin-top:16px}
+  .reveal.show{display:block;animation:fade .3s ease}
+  .rate{padding:16px 0;border-top:1px solid var(--line)}
+  .rate:first-of-type{border-top:0}
+  .rate .rl{font-weight:600;margin-bottom:10px}
+  .scale{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}
+  .scale label{position:relative}
+  .scale input{position:absolute;opacity:0;pointer-events:none}
+  .scale span{display:flex;align-items:center;justify-content:center;height:44px;border:1px solid var(--line);background:var(--bg2);font-family:var(--head);font-style:italic;font-weight:800;font-size:20px;cursor:pointer;transition:all .12s;user-select:none}
+  .scale span:hover{border-color:var(--muted)}
+  .scale input:checked+span{background:var(--yellow);color:#111;border-color:var(--yellow)}
+  .scale input:focus-visible+span{outline:2px solid var(--text);outline-offset:2px}
+  .scale11{grid-template-columns:repeat(11,1fr);gap:4px}
+  @media (max-width:420px){.scale span{font-size:17px;height:40px}}
+  .scale-ends{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+  .invalid .scale span{border-color:#6b2a30}
+  .consent{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:#c9ced8}
+  .consent input{width:22px;height:22px;margin-top:2px;accent-color:var(--red);flex:0 0 auto}
+  .actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:28px}
+  .btn{font-family:var(--head);font-style:italic;font-weight:800;text-transform:uppercase;font-size:20px;letter-spacing:.03em;border:0;cursor:pointer;padding:16px 30px;background:var(--red);color:#fff;transition:transform .1s,background .15s;text-decoration:none;display:inline-flex;align-items:center;gap:10px}
+  .btn:hover{background:#c91a26}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
+  .btn.ghost:hover{border-color:var(--text);background:transparent}
+  .btn.white{background:var(--text);color:var(--bg)}
+  .btn[disabled]{opacity:.6;cursor:wait}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+  .step-label{font-family:var(--head);font-style:italic;font-weight:800;text-transform:uppercase;color:var(--muted);letter-spacing:.06em;font-size:15px;margin-bottom:10px}
+  .section-title{display:flex;align-items:center;gap:12px;margin:38px 0 4px}
+  .section-title .bar{width:28px;height:4px}
+  .thanks{text-align:left;padding-top:30px}
+  .surprise{margin-top:34px;border:1px solid var(--line);background:linear-gradient(160deg,#161920 0%,#0f1115 60%);position:relative;overflow:hidden}
+  .surprise .inner{padding:34px 30px 30px}
+  .surprise .big{font-family:var(--head);font-style:italic;font-weight:900;text-transform:uppercase;line-height:.9;font-size:clamp(48px,10vw,96px);margin:14px 0 6px}
+  .surprise .big em{color:var(--yellow);font-style:italic}
+  .surprise p{color:#d5d9e0;font-size:18px;max-width:640px}
+  .surprise .pill-row{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}
+  .surprise .pill{background:var(--bg);border:1px solid var(--line);padding:10px 14px;font-weight:700}
+  .surprise .pill b{color:var(--yellow);font-family:var(--head);font-style:italic;font-size:20px;margin-right:6px}
+  .hidden-until{opacity:0;transform:translateY(16px)}
+  .pop{animation:pop .7s cubic-bezier(.2,.9,.3,1.2) forwards}
+  @keyframes pop{to{opacity:1;transform:none}}
+  .flag{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+  .flag i{position:absolute;top:-20px;width:8px;height:14px;opacity:.9;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(900px) rotate(540deg);opacity:0}}
+  .toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--line);padding:12px 18px;font-weight:600;display:none;z-index:50;max-width:92vw}
+  .toast.show{display:block}
+  footer{border-top:1px solid var(--line);color:var(--dim);font-size:13px}
+  footer .bar{max-width:880px;margin:0 auto;padding:22px 20px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  footer a{color:var(--muted)}
+  .demo-banner{background:var(--yellow);color:#111;text-align:center;font-weight:700;font-size:13px;padding:6px;display:none}
+</style>
+</head>
+<body>
+<div class="demo-banner" id="demoBanner">PREVIEW MODE: answers are not saved anywhere</div>
+<header class="top">
+  <div class="stripe"><i></i><i></i><i></i><i></i></div>
+  <div class="bar">
+    <img src="https://thekartchampionship.co.uk/wp-content/uploads/2026/10/tkc-logo.png" alt="The Kart Championship" onerror="this.outerHTML='<span class=&quot;tag&quot; style=&quot;color:#f4f5f7;font-size:22px&quot;>The Kart Championship</span>'">
+    <span class="tag">2027 Parent Survey</span>
+  </div>
+  <div class="progress"><span id="progress"></span></div>
+</header>
+
+<main>
+  <form id="survey" novalidate autocomplete="on">
+  <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+
+  <!-- SCREEN 0: LANDING -->
+  <section class="screen active" data-step="0">
+    <div class="hero">
+      <span class="kicker">MightE Bambino &amp; Cadet parents</span>
+      <h1>Help us shape<br>2027</h1>
+      <p class="lead">You know better than anyone what makes a race weekend worth the drive. Tell us what matters to you and your driver, and we will build the 2027 season around it.</p>
+      <div class="meta">
+        <div class="chip"><b>4</b>minutes</div>
+        <div class="chip"><b>4</b>quick steps</div>
+        <div class="chip"><b>1</b>big surprise at the end</div>
+      </div>
+      <button type="button" class="btn" data-next>Let's go <span aria-hidden="true">&rarr;</span></button>
+    </div>
+  </section>
+
+  <!-- SCREEN 1: CONTACT -->
+  <section class="screen" data-step="1">
+    <div class="step-label">Step 1 of 3</div>
+    <h2>Your details</h2>
+    <p class="muted">So we know who you are and can keep you posted on 2027.</p>
+    <div class="card accent-green">
+      <div class="grid2">
+        <div class="field" data-req="parentName">
+          <label class="q" for="parentName">Parent / guardian name</label>
+          <input type="text" id="parentName" name="parentName" autocomplete="name" maxlength="120">
+          <div class="err">Please enter your name</div>
+        </div>
+        <div class="field" data-req="driverName">
+          <label class="q" for="driverName">Driver's name</label>
+          <input type="text" id="driverName" name="driverName" maxlength="120">
+          <div class="err">Please enter your driver's name</div>
+        </div>
+        <div class="field" data-req="email" data-type="email">
+          <label class="q" for="email">Email address</label>
+          <input type="email" id="email" name="email" autocomplete="email" maxlength="160">
+          <div class="err">Please enter a valid email address</div>
+        </div>
+        <div class="field" data-req="phone" data-type="phone">
+          <label class="q" for="phone">Phone number</label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" maxlength="30">
+          <div class="err">Please enter a valid phone number</div>
+        </div>
+      </div>
+      <div class="field" data-req="consent" data-type="check" style="margin-bottom:0">
+        <label class="consent"><input type="checkbox" name="consent" value="Yes"><span>I agree to The Kart Championship storing these details and my answers to run this survey and to contact me about the 2027 season. See our <a href="https://thekartchampionship.co.uk/privacy-policy/" target="_blank" rel="noopener">privacy policy</a>.</span></label>
+        <div class="err">Please tick to continue</div>
+      </div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn ghost" data-back>&larr; Back</button>
+      <button type="button" class="btn" data-next>Next <span aria-hidden="true">&rarr;</span></button>
+    </div>
+  </section>
+
+  <!-- SCREEN 2: QUESTIONS -->
+  <section class="screen" data-step="2">
+    <div class="step-label">Step 2 of 3</div>
+    <h2>Your racing</h2>
+    <p class="muted">Straight answers help us most. There are no wrong ones.</p>
+
+    <div class="card accent-yellow">
+      <div class="grid2">
+        <div class="field" data-req="class2026">
+          <label class="q" for="class2026">Class raced in 2026</label>
+          <select id="class2026" name="class2026">
+            <option value="">Choose a class</option>
+            <option>MightE Bambino</option><option>MightE Cadet</option><option>Honda Cadet</option>
+            <option>Comer Bambino</option><option>IAME Bambino</option><option>Other</option>
+            <option>Did not race in 2026</option>
+          </select>
+          <div class="err">Please choose an option</div>
+        </div>
+        <div class="field" data-req="class2027">
+          <label class="q" for="class2027">Class for 2027</label>
+          <select id="class2027" name="class2027">
+            <option value="">Choose a class</option>
+            <option>MightE Bambino</option><option>MightE Cadet</option><option>MightE Super Cadet / Inter</option>
+            <option>Honda Cadet</option><option>Micro MAX</option><option>Other</option><option>Not decided yet</option>
+          </select>
+          <div class="err">Please choose an option</div>
+        </div>
+      </div>
+      <div class="field reveal" id="classOtherWrap" data-req="classOther" data-cond="classOther">
+        <label class="q" for="classOther">Which other class?</label>
+        <input type="text" id="classOther" name="classOther" maxlength="120">
+        <div class="err">Please tell us the class</div>
+      </div>
+
+      <div class="field" data-req="racedTkc2026">
+        <label class="q">Did you race in The Kart Championship in 2026?</label>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="racedTkc2026" value="Yes"><span>Yes</span></label>
+          <label class="choice"><input type="radio" name="racedTkc2026" value="No"><span>No</span></label>
+        </div>
+        <div class="err">Please choose an option</div>
+      </div>
+      <div class="reveal" id="tkcFollowUp">
+        <div class="field" data-req="liked2026" data-cond="tkc">
+          <label class="q" for="liked2026">What did you like about the championship in 2026?</label>
+          <textarea id="liked2026" name="liked2026" maxlength="2000"></textarea>
+          <div class="err">Please tell us what you liked</div>
+        </div>
+        <div class="field" data-req="disliked2026" data-cond="tkc">
+          <label class="q" for="disliked2026">What didn't you like?</label>
+          <p class="hint">Be honest. This is exactly what we need to hear.</p>
+          <textarea id="disliked2026" name="disliked2026" maxlength="2000"></textarea>
+          <div class="err">Please tell us what you didn't like</div>
+        </div>
+        <div class="field rate" data-req="nps" data-cond="tkc" style="border-top:0;padding-top:0">
+          <label class="q">How likely are you to recommend The Kart Championship to another family?</label>
+          <div class="scale scale11" role="radiogroup" aria-label="Likelihood to recommend">
+            <label><input type="radio" name="nps" value="0" aria-label="0"><span>0</span></label><label><input type="radio" name="nps" value="1" aria-label="1"><span>1</span></label><label><input type="radio" name="nps" value="2" aria-label="2"><span>2</span></label><label><input type="radio" name="nps" value="3" aria-label="3"><span>3</span></label><label><input type="radio" name="nps" value="4" aria-label="4"><span>4</span></label><label><input type="radio" name="nps" value="5" aria-label="5"><span>5</span></label><label><input type="radio" name="nps" value="6" aria-label="6"><span>6</span></label><label><input type="radio" name="nps" value="7" aria-label="7"><span>7</span></label><label><input type="radio" name="nps" value="8" aria-label="8"><span>8</span></label><label><input type="radio" name="nps" value="9" aria-label="9"><span>9</span></label><label><input type="radio" name="nps" value="10" aria-label="10"><span>10</span></label>
+          </div>
+          <div class="scale-ends"><span>Not at all likely</span><span>Extremely likely</span></div>
+          <div class="err">Please pick a score</div>
+        </div>
+      </div>
+      <div class="field" data-req="team" style="margin-bottom:0">
+        <label class="q">Did you run with a team?</label>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="team" value="Yes"><span>Yes, with a team</span></label>
+          <label class="choice"><input type="radio" name="team" value="No"><span>No, we run ourselves</span></label>
+        </div>
+        <div class="err">Please choose an option</div>
+      </div>
+      <div class="field" data-req="alsoRacing" data-type="multi" style="margin-top:20px">
+        <label class="q">Which other series are you planning to race in 2027?</label>
+        <p class="hint">Pick as many as apply.</p>
+        <div class="choices">
+          <label class="choice"><input type="checkbox" name="alsoRacing" value="None, TKC only"><span>None, TKC only</span></label>
+          <label class="choice"><input type="checkbox" name="alsoRacing" value="Super One"><span>Super One</span></label>
+          <label class="choice"><input type="checkbox" name="alsoRacing" value="UK Kart Series"><span>UK Kart Series</span></label>
+          <label class="choice"><input type="checkbox" name="alsoRacing" value="Champions Kart Club Bambino British Championship"><span>Champions Kart Club Bambino British</span></label>
+          <label class="choice"><input type="checkbox" name="alsoRacing" value="UKC / RMC UK"><span>UKC / RMC UK</span></label>
+          <label class="choice"><input type="checkbox" name="alsoRacing" value="British Kart Championships"><span>British Kart Championships</span></label>
+          <label class="choice"><input type="checkbox" name="alsoRacing" value="Club racing"><span>Club racing</span></label>
+          <label class="choice"><input type="checkbox" name="alsoRacing" value="Other"><span>Other</span></label>
+        </div>
+        <div class="err">Please pick at least one</div>
+      </div>
+      <div class="field reveal" id="alsoOtherWrap" data-req="alsoRacingOther" data-cond="alsoOther">
+        <label class="q" for="alsoRacingOther">Which other series?</label>
+        <input type="text" id="alsoRacingOther" name="alsoRacingOther" maxlength="200">
+        <div class="err">Please tell us which series</div>
+      </div>
+      <div class="field" data-req="clashDecider" style="margin-bottom:0">
+        <label class="q">If two events clash, what decides which one you go to?</label>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="clashDecider" value="Price"><span>Price</span></label>
+          <label class="choice"><input type="radio" name="clashDecider" value="Venue"><span>Venue</span></label>
+          <label class="choice"><input type="radio" name="clashDecider" value="Championship title"><span>Championship title</span></label>
+          <label class="choice"><input type="radio" name="clashDecider" value="Where our friends race"><span>Where our friends race</span></label>
+          <label class="choice"><input type="radio" name="clashDecider" value="Team decides"><span>Our team decides</span></label>
+          <label class="choice"><input type="radio" name="clashDecider" value="Something else"><span>Something else</span></label>
+        </div>
+        <div class="err">Please choose an option</div>
+      </div>
+    </div>
+
+    <div class="section-title"><span class="bar" style="background:var(--red)"></span><h3 style="margin:0">What matters most?</h3></div>
+    <p class="muted" style="margin-top:6px">Rate each one from 1 to 10 for how important it is when you choose where to race. 1 is not important, 10 is essential.</p>
+    <div class="card accent-red" id="ratings"></div>
+
+    <div class="section-title"><span class="bar" style="background:var(--blue)"></span><h3 style="margin:0">A few quick choices</h3></div>
+    <div class="card accent-blue">
+      <div class="field" data-req="format">
+        <label class="q">Would you prefer a 2 day or a 3 day race weekend?</label>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="format" value="2 day"><span>2 day</span></label>
+          <label class="choice"><input type="radio" name="format" value="3 day"><span>3 day</span></label>
+          <label class="choice"><input type="radio" name="format" value="No preference"><span>Don't mind</span></label>
+        </div>
+        <div class="err">Please choose an option</div>
+      </div>
+      <div class="field" data-req="roundFormat">
+        <label class="q">Would you rather have more rounds, or more racing per round?</label>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="roundFormat" value="Two rounds per weekend"><span>Two rounds a weekend, trophies both days, shorter races</span></label>
+          <label class="choice"><input type="radio" name="roundFormat" value="One round with superheats"><span>One round a weekend, superheats and a longer final</span></label>
+          <label class="choice"><input type="radio" name="roundFormat" value="No preference"><span>Don't mind</span></label>
+        </div>
+        <div class="err">Please choose an option</div>
+      </div>
+      <div class="field" data-req="sanction">
+        <label class="q">Do you prefer to race at Motorsport UK or IKR events?</label>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="sanction" value="Motorsport UK"><span>Motorsport UK</span></label>
+          <label class="choice"><input type="radio" name="sanction" value="IKR"><span>IKR</span></label>
+          <label class="choice"><input type="radio" name="sanction" value="No preference"><span>Don't mind</span></label>
+        </div>
+        <div class="err">Please choose an option</div>
+      </div>
+      <div class="field" data-req="budget">
+        <label class="q">What's your realistic total budget for the 2027 season?</label>
+        <p class="hint">Everything in: entries, tyres, testing, engines, parts and travel.</p>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="budget" value="Under £5,000"><span>Under £5,000</span></label>
+          <label class="choice"><input type="radio" name="budget" value="£5,000 to £10,000"><span>£5,000 to £10,000</span></label>
+          <label class="choice"><input type="radio" name="budget" value="£10,000 to £20,000"><span>£10,000 to £20,000</span></label>
+          <label class="choice"><input type="radio" name="budget" value="£20,000+"><span>£20,000+</span></label>
+        </div>
+        <div class="err">Please choose an option</div>
+      </div>
+      <div class="field" data-req="raceWeekends">
+        <label class="q">How many race weekends would you like to do a month?</label>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="raceWeekends" value="1"><span>1</span></label>
+          <label class="choice"><input type="radio" name="raceWeekends" value="2"><span>2</span></label>
+          <label class="choice"><input type="radio" name="raceWeekends" value="3"><span>3</span></label>
+        </div>
+        <div class="err">Please choose an option</div>
+      </div>
+      <div class="field" data-req="testDays">
+        <label class="q">How many test days do you usually do a month?</label>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="testDays" value="None"><span>None</span></label>
+          <label class="choice"><input type="radio" name="testDays" value="1"><span>1</span></label>
+          <label class="choice"><input type="radio" name="testDays" value="2"><span>2</span></label>
+          <label class="choice"><input type="radio" name="testDays" value="3"><span>3</span></label>
+          <label class="choice"><input type="radio" name="testDays" value="4 or more"><span>4 or more</span></label>
+        </div>
+        <div class="err">Please choose an option</div>
+      </div>
+      <div class="grid2">
+        <div class="field" data-req="travel">
+          <label class="q">How far will you travel for a round?</label>
+          <div class="choices">
+            <label class="choice"><input type="radio" name="travel" value="Under 2 hours"><span>Under 2 hours</span></label>
+            <label class="choice"><input type="radio" name="travel" value="2 to 4 hours"><span>2 to 4 hours</span></label>
+            <label class="choice"><input type="radio" name="travel" value="4 hours or more"><span>4 hours or more</span></label>
+          </div>
+          <div class="err">Please choose an option</div>
+        </div>
+        <div class="field" data-req="postcode" data-type="postcode">
+          <label class="q" for="postcode">First half of your postcode</label>
+          <p class="hint">For example M1, WA6 or CF31. Helps us plan venues.</p>
+          <input type="text" id="postcode" name="postcode" maxlength="4" autocomplete="off" style="max-width:160px;text-transform:uppercase">
+          <div class="err">Please enter the first half, e.g. WA6</div>
+        </div>
+      </div>
+      <div class="field" data-req="drivenDreams" style="margin-bottom:0">
+        <label class="q">Would you be interested in taking part in Driven Dreams, our TV series on Amazon Prime?</label>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="drivenDreams" value="Yes"><span>Yes</span></label>
+          <label class="choice"><input type="radio" name="drivenDreams" value="Maybe"><span>Maybe</span></label>
+          <label class="choice"><input type="radio" name="drivenDreams" value="No"><span>No</span></label>
+        </div>
+        <div class="err">Please choose an option</div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn ghost" data-back>&larr; Back</button>
+      <button type="button" class="btn" data-next>Next <span aria-hidden="true">&rarr;</span></button>
+    </div>
+  </section>
+
+  <!-- SCREEN 3: 2027 -->
+  <section class="screen" data-step="3">
+    <div class="step-label">Step 3 of 3</div>
+    <h2>Your 2027 plans</h2>
+    <div class="card accent-green">
+      <div class="field" data-req="signed2027">
+        <label class="q">Have you signed up for The Kart Championship 2027 yet?</label>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="signed2027" value="Yes"><span>Yes, we're in</span></label>
+          <label class="choice"><input type="radio" name="signed2027" value="Not yet"><span>Not yet</span></label>
+        </div>
+        <div class="err">Please choose an option</div>
+      </div>
+      <div class="reveal" id="notSigned">
+        <div class="field" data-req="racingInstead" data-type="multi" data-cond="notSigned">
+          <label class="q">What are you looking at racing instead?</label>
+          <p class="hint">Pick as many as apply.</p>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="racingInstead" value="Still planning TKC, just not signed up yet"><span>Still planning TKC, not signed yet</span></label>
+            <label class="choice"><input type="checkbox" name="racingInstead" value="Champions Kart Club Bambino British Championship"><span>Champions Kart Club Bambino British</span></label>
+            <label class="choice"><input type="checkbox" name="racingInstead" value="Super One"><span>Super One</span></label>
+            <label class="choice"><input type="checkbox" name="racingInstead" value="UK Kart Series"><span>UK Kart Series</span></label>
+            <label class="choice"><input type="checkbox" name="racingInstead" value="UKC / RMC UK"><span>UKC / RMC UK</span></label>
+            <label class="choice"><input type="checkbox" name="racingInstead" value="British Kart Championships"><span>British Kart Championships</span></label>
+            <label class="choice"><input type="checkbox" name="racingInstead" value="Club racing"><span>Club racing</span></label>
+            <label class="choice"><input type="checkbox" name="racingInstead" value="Not racing in 2027"><span>Not racing in 2027</span></label>
+            <label class="choice"><input type="checkbox" name="racingInstead" value="Undecided"><span>Undecided</span></label>
+            <label class="choice"><input type="checkbox" name="racingInstead" value="Other"><span>Other</span></label>
+          </div>
+          <div class="err">Please pick at least one</div>
+        </div>
+        <div class="field reveal" id="insteadOtherWrap" data-req="racingInsteadOther" data-cond="insteadOther">
+          <label class="q" for="racingInsteadOther">Which other series?</label>
+          <input type="text" id="racingInsteadOther" name="racingInsteadOther" maxlength="200">
+          <div class="err">Please tell us which series</div>
+        </div>
+        <div class="field" data-req="why" data-cond="notSigned" style="margin-bottom:0">
+          <label class="q" for="why">Why?</label>
+          <p class="hint">Price, dates, venues, format, something else? Tell us straight.</p>
+          <textarea id="why" name="why" maxlength="2000"></textarea>
+          <div class="err">Please tell us why</div>
+        </div>
+      </div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn ghost" data-back>&larr; Back</button>
+      <button type="button" class="btn" id="submitBtn">Submit <span aria-hidden="true">&rarr;</span></button>
+    </div>
+  </section>
+
+  <!-- SCREEN 4: THANK YOU + SURPRISE -->
+  <section class="screen" data-step="4">
+    <div class="thanks">
+      <span class="kicker" style="background:var(--green)">Submitted</span>
+      <h2>Thank you<span id="thanksName"></span></h2>
+      <p class="lead" style="margin-top:10px">Thank you for completing this form and helping us shape 2027.</p>
+    </div>
+    <div class="surprise">
+      <div class="stripe"><i></i><i></i><i></i><i></i></div>
+      <div class="flag" id="confetti"></div>
+      <div class="inner">
+        <div class="hidden-until" id="s1"><span class="kicker">Now the good news</span></div>
+        <div class="big hidden-until" id="s2">Free entry<br>to <em>TKC 2027</em></div>
+        <div class="hidden-until" id="s3">
+          <p>We have partnered with MightE for 2027. Every driver who signs up to <strong>MightE Bambino or MightE Cadet</strong> over the Kartmania weekend, and also signs up to the <strong>Champions Kart Club Bambino Championship</strong> in December, will be eligible for completely free entry into The Kart Championship 2027 season.</p>
+          <div class="pill-row">
+            <div class="pill"><b>6</b>rounds</div>
+            <div class="pill"><b>100%</b>race entry covered</div>
+            <div class="pill"><b>You</b>just cover tyres</div>
+          </div>
+          <p>We will be using the information you have given us to help shape your 2027 season, and we look forward to you being part of it.</p>
+          <p id="termsLine" style="display:none;font-size:14px"><a id="termsLink" href="#" target="_blank" rel="noopener">Read the full terms</a></p>
+          <div class="actions" style="justify-content:flex-start;flex-wrap:wrap">
+            <a class="btn" href="https://bkc.alphatiming.co.uk/" target="_blank" rel="noopener">Register for 2027 &rarr;</a>
+            <a class="btn ghost" href="https://thekartchampionship.co.uk/" target="_blank" rel="noopener">The Kart Championship</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  </form>
+</main>
+
+<footer>
+  <div class="stripe"><i></i><i></i><i></i><i></i></div>
+  <div class="bar">
+    <span>&copy; 2026 The Kart Championship &middot; Organised by Driven Kart Club</span>
+    <span><a href="https://thekartchampionship.co.uk/privacy-policy/" target="_blank" rel="noopener">Privacy</a> &middot; <a href="mailto:compsec@thekartchampionship.co.uk">compsec@thekartchampionship.co.uk</a></span>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== Settings ===== */
+// Only used when this page is hosted outside Apps Script (e.g. on BKC.drivenmotorsportgroup.co.uk).
+// Paste the Apps Script web app URL (ending /exec) between the quotes.
+var TKC_ENDPOINT = "__ENDPOINT__";
+// Optional link to full offer terms. Leave empty to hide the line.
+var OFFER_TERMS_URL = "";
+
+var RATINGS = [
+  ["r_stream","The event is live streamed"],
+  ["r_tyres","The event runs controlled tyres"],
+  ["r_msuk","The event is Motorsport UK sanctioned (rather than IKR)"],
+  ["r_biggrid","A big grid in our class"],
+  ["r_owngrid","Our class races on its own grid, not shared with another class"],
+  ["r_officials","Professionally run, with a stewards panel, Clerk of the Course and CCTV cameras"],
+  ["r_medical","Exceptional medical cover, with multiple paramedics on site at every event"],
+  ["r_scrutineering","Senior scrutineers doing technical checks, with the ability to dyno engines"],
+  ["r_tv","The event is the setting for a TV show (Driven Dreams)"],
+  ["r_social","Strong social media coverage of the event"],
+  ["r_title","The championship awards a British or national title"],
+  ["r_tracktime","Plenty of track time and the number of races per weekend"],
+  ["r_practiceincl","A practice day is included in the entry price"]
+];
+
+/* ===== Transport: Apps Script, remote endpoint, or preview ===== */
+var Api = (function(){
+  var inAppsScript = typeof google !== "undefined" && google.script && google.script.run;
+  var hasEndpoint = /^https:\/\/script\.google\.com\//.test(TKC_ENDPOINT);
+  function viaGas(fn, payload){
+    return new Promise(function(res, rej){
+      google.script.run.withSuccessHandler(res).withFailureHandler(rej)[fn](payload);
+    });
+  }
+  function viaFetch(action, payload){
+    return fetch(TKC_ENDPOINT, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body: JSON.stringify({action:action, data:payload})}).then(function(r){ return r.json(); })
+      .then(function(j){ if(!j || j.ok === false) throw new Error((j && j.error) || "Save failed"); return j; });
+  }
+  function viaPreview(action, payload){
+    console.log("[preview]", action, payload);
+    return new Promise(function(res){ setTimeout(function(){ res({ok:true, id:"preview-"+Date.now()}); }, 350); });
+  }
+  var mode = inAppsScript ? "gas" : (hasEndpoint ? "fetch" : "preview");
+  return {
+    mode: mode,
+    start: function(p){ return mode==="gas" ? viaGas("startSurvey", p) : mode==="fetch" ? viaFetch("start", p) : viaPreview("start", p); },
+    submit: function(p){ return mode==="gas" ? viaGas("submitSurvey", p) : mode==="fetch" ? viaFetch("submit", p) : viaPreview("submit", p); }
+  };
+})();
+if (Api.mode === "preview") document.getElementById("demoBanner").style.display = "block";
+
+/* ===== Build rating rows ===== */
+(function(){
+  var box = document.getElementById("ratings"), html = "";
+  RATINGS.forEach(function(r, i){
+    html += '<div class="rate field" data-req="'+r[0]+'" data-type="radio"><div class="rl"><span class="muted" style="font-family:var(--head);font-style:italic;font-weight:800;margin-right:8px">'+(i+1<10?"0":"")+(i+1)+'</span>'+r[1]+'</div><div class="scale" role="radiogroup" aria-label="'+r[1].replace(/"/g,"&quot;")+'">';
+    for (var n=1;n<=10;n++) html += '<label><input type="radio" name="'+r[0]+'" value="'+n+'" aria-label="'+n+'"><span>'+n+'</span></label>';
+    html += '</div><div class="scale-ends"><span>Not important</span><span>Essential</span></div><div class="err">Please pick a score</div></div>';
+  });
+  box.innerHTML = html;
+})();
+
+/* ===== State ===== */
+var form = document.getElementById("survey");
+var screens = [].slice.call(document.querySelectorAll(".screen"));
+var step = 0, recordId = null;
+function val(name){ var el = form.elements[name]; if(!el) return ""; if (el.type==="checkbox") return el.checked ? el.value : ""; return (el.value||"").trim(); }
+function radio(name){ var c = form.querySelector('input[name="'+name+'"]:checked'); return c ? c.value : ""; }
+function multi(name){ return [].slice.call(form.querySelectorAll('input[name="'+name+'"]:checked')).map(function(c){return c.value;}); }
+
+function conditionOn(cond){
+  switch(cond){
+    case "tkc": return radio("racedTkc2026")==="Yes";
+    case "notSigned": return radio("signed2027")==="Not yet";
+    case "classOther": return val("class2026")==="Other" || val("class2027")==="Other";
+    case "insteadOther": return radio("signed2027")==="Not yet" && multi("racingInstead").indexOf("Other")>-1;
+    case "alsoOther": return multi("alsoRacing").indexOf("Other")>-1;
+  }
+  return true;
+}
+function toggleReveals(){
+  document.getElementById("alsoOtherWrap").classList.toggle("show", conditionOn("alsoOther"));
+  document.getElementById("tkcFollowUp").classList.toggle("show", conditionOn("tkc"));
+  document.getElementById("notSigned").classList.toggle("show", conditionOn("notSigned"));
+  document.getElementById("classOtherWrap").classList.toggle("show", conditionOn("classOther"));
+  document.getElementById("insteadOtherWrap").classList.toggle("show", conditionOn("insteadOther"));
+}
+form.addEventListener("change", function(e){
+  // "None, TKC only" can't be picked alongside another series
+  if (e.target.name === "alsoRacing" && e.target.checked){
+    var none = e.target.value === "None, TKC only";
+    form.querySelectorAll('input[name="alsoRacing"]').forEach(function(c){
+      if (c !== e.target && (none || c.value === "None, TKC only")) c.checked = false;
+    });
+  }
+  if (e.target.name === "postcode") e.target.value = e.target.value.toUpperCase().replace(/\s+/g,"");
+  toggleReveals();
+  var f = e.target.closest(".field"); if (f) f.classList.remove("invalid");
+});
+form.addEventListener("input", function(e){ var f = e.target.closest(".field"); if (f) f.classList.remove("invalid"); });
+
+function validate(section){
+  var bad = [];
+  section.querySelectorAll(".field[data-req]").forEach(function(f){
+    var cond = f.getAttribute("data-cond");
+    if (cond && !conditionOn(cond)) { f.classList.remove("invalid"); return; }
+    var name = f.getAttribute("data-req"), type = f.getAttribute("data-type"), ok;
+    var el = form.elements[name];
+    if (type==="check") ok = !!val(name);
+    else if (type==="multi") ok = multi(name).length>0;
+    else if (el && el.length && el[0] && el[0].type==="radio") ok = !!radio(name);
+    else if (el && el.type==="radio") ok = !!radio(name);
+    else {
+      var v = val(name); ok = v.length>0;
+      if (ok && type==="email") ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+      if (ok && type==="phone") ok = v.replace(/[^\d]/g,"").length >= 10;
+      if (ok && type==="postcode") ok = /^[A-Z]{1,2}\d[A-Z\d]?$/i.test(v.replace(/\s+/g,""));
+    }
+    f.classList.toggle("invalid", !ok);
+    if (!ok) bad.push(f);
+  });
+  if (bad.length){ bad[0].scrollIntoView({behavior:"smooth", block:"center"}); var i = bad[0].querySelector("input:not([type=radio]):not([type=checkbox]),select,textarea"); if(i) setTimeout(function(){ i.focus({preventScroll:true}); }, 300); }
+  return bad.length===0;
+}
+
+function go(n){
+  screens[step].classList.remove("active");
+  step = n;
+  screens[step].classList.add("active");
+  document.getElementById("progress").style.width = (step/4*100)+"%";
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+function toast(msg){ var t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(function(){t.classList.remove("show");}, 4200); }
+
+function contactPayload(){
+  return { id: recordId, parentName: val("parentName"), email: val("email"), phone: val("phone"),
+           driverName: val("driverName"), consent: val("consent") ? "Yes" : "No", website: val("website") };
+}
+function fullPayload(){
+  var p = contactPayload();
+  p.class2026 = val("class2026"); p.class2027 = val("class2027");
+  p.classOther = conditionOn("classOther") ? val("classOther") : "";
+  p.racedTkc2026 = radio("racedTkc2026");
+  p.liked2026 = conditionOn("tkc") ? val("liked2026") : "";
+  p.disliked2026 = conditionOn("tkc") ? val("disliked2026") : "";
+  p.nps = conditionOn("tkc") ? radio("nps") : "";
+  p.team = radio("team");
+  p.alsoRacing = multi("alsoRacing").join("; ");
+  p.alsoRacingOther = conditionOn("alsoOther") ? val("alsoRacingOther") : "";
+  p.clashDecider = radio("clashDecider");
+  RATINGS.forEach(function(r){ p[r[0]] = radio(r[0]); });
+  p.format = radio("format"); p.roundFormat = radio("roundFormat"); p.sanction = radio("sanction");
+  p.budget = radio("budget"); p.raceWeekends = radio("raceWeekends"); p.testDays = radio("testDays"); p.travel = radio("travel");
+  p.postcode = val("postcode").toUpperCase().replace(/\s+/g,"");
+  p.drivenDreams = radio("drivenDreams");
+  p.signed2027 = radio("signed2027");
+  var ns = conditionOn("notSigned");
+  p.racingInstead = ns ? multi("racingInstead").join("; ") : "";
+  p.racingInsteadOther = conditionOn("insteadOther") ? val("racingInsteadOther") : "";
+  p.why = ns ? val("why") : "";
+  return p;
+}
+
+document.querySelectorAll("[data-back]").forEach(function(b){ b.addEventListener("click", function(){ go(step-1); }); });
+document.querySelectorAll("[data-next]").forEach(function(b){
+  b.addEventListener("click", function(){
+    if (step===0) return go(1);
+    if (!validate(screens[step])) return;
+    if (step===1 && !recordId){
+      // Save contact details straight away so we keep the lead even if they stop here.
+      Api.start(contactPayload()).then(function(r){ if (r && r.id) recordId = r.id; }).catch(function(err){ console.warn(err); });
+    }
+    go(step+1);
+  });
+});
+
+var submitting = false;
+document.getElementById("submitBtn").addEventListener("click", function(){
+  if (submitting) return;
+  if (!validate(screens[3])) return;
+  var btn = this; submitting = true; btn.disabled = true; btn.innerHTML = "Saving&hellip;";
+  Api.submit(fullPayload()).then(function(){
+    var first = val("parentName").split(" ")[0];
+    document.getElementById("thanksName").textContent = first ? ", " + first : "";
+    if (OFFER_TERMS_URL){ document.getElementById("termsLink").href = OFFER_TERMS_URL; document.getElementById("termsLine").style.display = "block"; }
+    go(4); celebrate();
+  }).catch(function(err){
+    console.error(err);
+    submitting = false; btn.disabled = false; btn.innerHTML = 'Submit <span aria-hidden="true">&rarr;</span>';
+    toast("Sorry, that didn't save. Check your connection and press Submit again.");
+  });
+});
+
+function celebrate(){
+  ["s1","s2","s3"].forEach(function(id, i){ setTimeout(function(){ document.getElementById(id).classList.add("pop"); }, 400 + i*550); });
+  var box = document.getElementById("confetti"), cols = ["#1f9d55","#e4e227","#e4202d","#2d6ca1","#f4f5f7"];
+  for (var i=0;i<70;i++){
+    var c = document.createElement("i");
+    c.style.left = (Math.random()*100)+"%";
+    c.style.background = cols[i%cols.length];
+    c.style.animationDuration = (2.2+Math.random()*2.4)+"s";
+    c.style.animationDelay = (0.9+Math.random()*1.2)+"s";
+    box.appendChild(c);
+  }
+}
+</script>
+</body>
+</html>
