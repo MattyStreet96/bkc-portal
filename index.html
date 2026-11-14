@@ -466,14 +466,14 @@
         <div class="hidden-until" id="s1"><span class="kicker">Now the good news</span></div>
         <div class="big hidden-until" id="s2">Free entry<br>to <em>TKC 2027</em></div>
         <div class="hidden-until" id="s3">
-          <p>We have partnered with MightE for 2027. Every driver who signs up to <strong>MightE Bambino or MightE Cadet</strong> over the Kartmania weekend, and also signs up to the <strong>Champions Kart Club Bambino Championship</strong> in December, will be eligible for completely free entry into The Kart Championship 2027 season.</p>
+          <p>Sign up for <strong>The Kart Championship</strong> over the Kartmania weekend and you get <strong>free entry into all 6 rounds</strong> of The Kart Championship 2027.</p>
           <div class="pill-row">
             <div class="pill"><b>6</b>rounds</div>
             <div class="pill"><b>100%</b>race entry covered</div>
             <div class="pill"><b>You</b>just cover tyres</div>
           </div>
-          <p>We will be using the information you have given us to help shape your 2027 season, and we look forward to you being part of it.</p>
-          <p id="termsLine" style="display:none;font-size:14px"><a id="termsLink" href="#" target="_blank" rel="noopener">Read the full terms</a></p>
+          <p>We are going to use your feedback to help shape how 2027 looks.</p>
+          <p style="font-size:14px">Full T&amp;Cs apply.<span id="termsLine" style="display:none"> <a id="termsLink" href="#" target="_blank" rel="noopener">Read the full terms</a></span></p>
           <div class="actions" style="justify-content:flex-start;flex-wrap:wrap">
             <a class="btn" href="https://bkc.alphatiming.co.uk/" target="_blank" rel="noopener">Register for 2027 &rarr;</a>
             <a class="btn ghost" href="https://thekartchampionship.co.uk/" target="_blank" rel="noopener">The Kart Championship</a>
@@ -678,7 +678,7 @@ document.getElementById("submitBtn").addEventListener("click", function(){
   Api.submit(fullPayload()).then(function(){
     var first = val("parentName").split(" ")[0];
     document.getElementById("thanksName").textContent = first ? ", " + first : "";
-    if (OFFER_TERMS_URL){ document.getElementById("termsLink").href = OFFER_TERMS_URL; document.getElementById("termsLine").style.display = "block"; }
+    if (OFFER_TERMS_URL){ document.getElementById("termsLink").href = OFFER_TERMS_URL; document.getElementById("termsLine").style.display = "inline"; }
     go(4); celebrate();
   }).catch(function(err){
     console.error(err);
