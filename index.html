@@ -319,6 +319,15 @@
         </div>
         <div class="err">Please choose an option</div>
       </div>
+      <div class="field" data-req="tyrePref">
+        <label class="q">Would you prefer a slick and a wet tyre, or an all weather tyre?</label>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="tyrePref" value="Slick and wet tyres"><span>Slick and wet tyres</span></label>
+          <label class="choice"><input type="radio" name="tyrePref" value="All weather tyre"><span>All weather tyre</span></label>
+          <label class="choice"><input type="radio" name="tyrePref" value="No preference"><span>Don't mind</span></label>
+        </div>
+        <div class="err">Please choose an option</div>
+      </div>
       <div class="field" data-req="sanction">
         <label class="q">Do you prefer to race at Motorsport UK or IKR events?</label>
         <div class="choices">
@@ -636,7 +645,7 @@ function fullPayload(){
   p.alsoRacingOther = conditionOn("alsoOther") ? val("alsoRacingOther") : "";
   p.clashDecider = radio("clashDecider");
   RATINGS.forEach(function(r){ p[r[0]] = radio(r[0]); });
-  p.format = radio("format"); p.roundFormat = radio("roundFormat"); p.sanction = radio("sanction");
+  p.format = radio("format"); p.roundFormat = radio("roundFormat"); p.tyrePref = radio("tyrePref"); p.sanction = radio("sanction");
   p.budget = radio("budget"); p.raceWeekends = radio("raceWeekends"); p.testDays = radio("testDays"); p.travel = radio("travel");
   p.postcode = val("postcode").toUpperCase().replace(/\s+/g,"");
   p.drivenDreams = radio("drivenDreams");
