@@ -463,17 +463,12 @@
       <div class="stripe"><i></i><i></i><i></i><i></i></div>
       <div class="flag" id="confetti"></div>
       <div class="inner">
-        <div class="hidden-until" id="s1"><span class="kicker">Now the good news</span></div>
-        <div class="big hidden-until" id="s2">Free entry<br>to <em>TKC 2027</em></div>
+        <div class="hidden-until" id="s1"><span class="kicker">An update from us</span></div>
+        <div class="big hidden-until" id="s2">More news<br><em>coming soon</em></div>
         <div class="hidden-until" id="s3">
-          <p>Sign up for <strong>The Kart Championship</strong> over the Kartmania weekend and you get <strong>free entry into all 6 rounds</strong> of The Kart Championship 2027.</p>
-          <div class="pill-row">
-            <div class="pill"><b>6</b>rounds</div>
-            <div class="pill"><b>100%</b>race entry covered</div>
-            <div class="pill"><b>You</b>just cover tyres</div>
-          </div>
-          <p>We are going to use your feedback to help shape how 2027 looks.</p>
-          <p style="font-size:14px">Full T&amp;Cs apply.<span id="termsLine" style="display:none"> <a id="termsLink" href="#" target="_blank" rel="noopener">Read the full terms</a></span></p>
+          <p>We have some news to share within the next few days regarding the future of the <strong>MightE classes</strong>, so please bear with us.</p>
+          <p>We're sorry for any confusion over the last few days. We'll be in touch with every family directly as soon as we can.</p>
+          <p>Your feedback is helping shape how 2027 looks. Thank you for taking part.</p>
           <div class="actions" style="justify-content:flex-start;flex-wrap:wrap">
             <a class="btn" href="https://bkc.alphatiming.co.uk/" target="_blank" rel="noopener">Register for 2027 &rarr;</a>
             <a class="btn ghost" href="https://thekartchampionship.co.uk/" target="_blank" rel="noopener">The Kart Championship</a>
@@ -690,7 +685,7 @@ document.getElementById("submitBtn").addEventListener("click", function(){
 function celebrate(){
   ["s1","s2","s3"].forEach(function(id, i){ setTimeout(function(){ document.getElementById(id).classList.add("pop"); }, 400 + i*550); });
   var box = document.getElementById("confetti"), cols = ["#1f9d55","#e4e227","#e4202d","#2d6ca1","#f4f5f7"];
-  for (var i=0;i<70;i++){
+  for (var i=0;i<0;i++){ // confetti off while the offer is paused
     var c = document.createElement("i");
     c.style.left = (Math.random()*100)+"%";
     c.style.background = cols[i%cols.length];
